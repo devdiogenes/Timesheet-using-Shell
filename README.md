@@ -1,4 +1,4 @@
-# timesheet.sh
+# Timesheet using Shell
 A very easy way to register the time you taked for a task using shell script. Made with AI
 
 ## How to use
