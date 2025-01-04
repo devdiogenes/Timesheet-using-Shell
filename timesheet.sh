@@ -9,6 +9,7 @@ CURRENT_TIME=$(date "+%Y-%m-%d %H:%M")
 # Function to calculate total time
 calculate_total_time() {
     local total_minutes=0
+    local total_hours=0
     while IFS= read -r line; do
         # Extract start and end times using basic string operations
         start=$(echo "$line" | awk -F' - ' '{print $1}')
@@ -26,7 +27,8 @@ calculate_total_time() {
         # Calculate the difference in minutes
         total_minutes=$((total_minutes + (end_seconds - start_seconds) / 60))
     done < "$FILE"
-    echo "Total time: $total_minutes minutes"
+    total_hours=$(echo "scale=2; $total_minutes / 60" | bc)
+    echo "Total time: $total_minutes minutes ($total_hours hours)"
 }
 
 # Check for 'get' argument
