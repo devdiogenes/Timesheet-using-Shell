@@ -25,7 +25,7 @@ calculate_total_time() {
         total_minutes=$((total_minutes + (end_seconds - start_seconds) / 60))
     done < "$FILE"
     total_hours=$(echo "scale=2; $total_minutes / 60" | bc)
-    read -p "Total time: $total_minutes minutes ($total_hours hours)"
+    read -p "Project execution time: $total_minutes minutes ($total_hours hours)"
 }
 
 # Check for 'get' argument
@@ -53,4 +53,6 @@ fi
 
 current_time=$(date "+%Y-%m-%d %H:%M")
 sed -i "$ s|$| - $current_time|" "$FILE"
-read -p "Time register stopped!"
+echo "Time register stopped!"
+echo "========================="
+calculate_total_time
