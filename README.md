@@ -11,4 +11,4 @@ A very easy way to register the time you taked for a task using shell script. Ma
 
 * [ ] Press Enter in the terminal to stop the counter;
 
-* [ ] After you end your project, just run `./timesheet.sh` for get your total time ![image](https://github.com/user-attachments/assets/0da2b9bf-3c3d-40f5-9374-a6aabdc36513)
+* [ ] If you only want to see your current project time, run `./timesheet.sh get` ![image](https://github.com/user-attachments/assets/0da2b9bf-3c3d-40f5-9374-a6aabdc36513)
