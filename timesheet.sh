@@ -3,9 +3,6 @@
 # File to store the time registers
 FILE="Time Registers.txt"
 
-# Get the current date and time
-CURRENT_TIME=$(date "+%Y-%m-%d %H:%M")
-
 # Function to calculate total time
 calculate_total_time() {
     local total_minutes=0
@@ -28,13 +25,13 @@ calculate_total_time() {
         total_minutes=$((total_minutes + (end_seconds - start_seconds) / 60))
     done < "$FILE"
     total_hours=$(echo "scale=2; $total_minutes / 60" | bc)
-    echo "Total time: $total_minutes minutes ($total_hours hours)"
+    read -p "Total time: $total_minutes minutes ($total_hours hours)"
 }
 
 # Check for 'get' argument
 if [[ "$1" == "get" ]]; then
     if [[ ! -f "$FILE" ]]; then
-        echo "No time registers found."
+        read -p "No time registers found"
         exit 1
     fi
     calculate_total_time
@@ -44,17 +41,16 @@ fi
 # Ensure the file exists
 if [[ ! -f "$FILE" ]]; then
     touch "$FILE"
-    echo "$CURRENT_TIME" >> "$FILE"
-    echo "Time counter started"
-    exit 0
 fi
 
 # Check if the last line is incomplete (does not contain " - ")
 LAST_LINE=$(tail -n 1 "$FILE")
-if [[ "$LAST_LINE" != *" - "* ]]; then
-    sed -i "$ s|$| - $CURRENT_TIME|" "$FILE"
-    echo "Time register stopped"
-else
-    echo "$CURRENT_TIME" >> "$FILE"
-    echo "Time counter started"
+if [[ ! "$LAST_LINE" =~ *" - "* ]]; then
+    current_time=$(date "+%Y-%m-%d %H:%M")
+    echo "$current_time" >> "$FILE"
+    read -p "Time counter started at $current_time! Press Enter to stop..."
 fi
+
+current_time=$(date "+%Y-%m-%d %H:%M")
+sed -i "$ s|$| - $current_time|" "$FILE"
+read -p "Time register stopped!"
